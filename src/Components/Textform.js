@@ -3,16 +3,19 @@ import React, {useState} from 'react'
 export default function Textform(props) {
   const handleUpClick = () =>{
     settext(text.toUpperCase());
+    props.showAlert("Converted to UpperCase!","success")
   }
 
   const handleLowClick = () =>{
     settext(text.toLowerCase());
+    props.showAlert("Converted to LowerCase!","success")
   }
 
   const handleCopy = () =>{
     let text = document.getElementById("myBox");
     // text.select();
     navigator.clipboard.writeText(text.value);
+    props.showAlert("Copy to ClipBoard!","success")
   }
 
   const capitalFirstLetter = ()=>{
@@ -22,10 +25,12 @@ export default function Textform(props) {
        uppercaseword += element.charAt(0).toUpperCase() + element.slice(1) + " "
     });
     settext(uppercaseword.trim())
+    props.showAlert("Capitalize First Lettor!","success")
   }
 
   const handleClearClick = () =>{
     settext("");
+    props.showAlert("Cleared!","success")
   }
 
 
@@ -33,6 +38,7 @@ export default function Textform(props) {
     let msg = new SpeechSynthesisUtterance();
     msg.text = text;
     window.speechSynthesis.speak(msg);
+    props.showAlert("Listen!","success")
   }  
 
   const handleOnChange = (event) =>{
@@ -57,8 +63,8 @@ export default function Textform(props) {
     </div>
     <div className="container my-3" style={{color : props.mode==='dark'?'white':'#042743'}}>
       <h2>Your Text Summery</h2>
-      <p>{text.split(" ").length} words and {text.length} characters</p>
-      <p>{0.008 * text.split(" ").length} minutes read</p>
+      <p><b>{text.length === 0? "0" : text.split(" ").length}</b> words, <b>{text.length}</b> Characters</p>
+      <p><b>{text.length === 0? "0" : 0.008 * text.split(" ").length}</b> minutes read</p>
       <h2>Preview</h2>
       <p>{text.length>0?text:'Enter Your Text to Preview'}</p>
     </div>
